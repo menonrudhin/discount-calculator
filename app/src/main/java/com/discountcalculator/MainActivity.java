@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.btnScreenShot);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton btnScreenShot = findViewById(R.id.btnScreenShot);
+        btnScreenShot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (Build.VERSION.SDK_INT >= 23) {
