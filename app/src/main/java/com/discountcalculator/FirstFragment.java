@@ -51,12 +51,12 @@ public class FirstFragment extends Fragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     if (txtMrp.getText().toString().length() == 0) {
-                        txtMrp.setText(R.string.actual_price);
+                        txtMrp.setText("Actual Price/MRP");
 
                         isMrpCleaned = false;
                     }
                 } else {
-                    if (!isMrpCleaned && txtMrp.getText().toString().equals(R.string.actual_price)) {
+                    if (!isMrpCleaned && txtMrp.getText().toString().equals("Actual Price/MRP")) {
                         txtMrp.setText("");
 
                         isMrpCleaned = true;
@@ -70,12 +70,12 @@ public class FirstFragment extends Fragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     if (txtDiscount.getText().toString().length() == 0) {
-                        txtDiscount.setText(R.string.discount_perc);
+                        txtDiscount.setText("Discount offered");
 
                         isDiscountCleaned = false;
                     }
                 } else {
-                    if (!isDiscountCleaned && txtDiscount.getText().toString().equals(R.string.discount_perc)) {
+                    if (!isDiscountCleaned && txtDiscount.getText().toString().equals("Discount offered")) {
                         txtDiscount.setText("");
 
                         isDiscountCleaned = true;
