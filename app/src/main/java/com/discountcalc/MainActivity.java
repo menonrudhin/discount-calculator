@@ -1,4 +1,4 @@
-package com.discountcalculator;
+package com.discountcalc;
 
 import android.app.Activity;
 import android.content.Context;

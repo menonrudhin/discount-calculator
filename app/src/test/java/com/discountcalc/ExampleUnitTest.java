@@ -1,4 +1,4 @@
-package com.discountcalculator;
+package com.discountcalc;
 
 import org.junit.Test;
 
