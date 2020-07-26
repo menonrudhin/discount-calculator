@@ -1,16 +1,24 @@
 package com.discountcalc;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.discountcalc.adapter.ResultAdapter;
+import com.discountcalc.model.Result;
+
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FirstFragment extends Fragment {
     private boolean responseCode = true;
@@ -35,64 +43,7 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        toast = Toast.makeText(getContext(), "Please enter a valid value", Toast.LENGTH_SHORT);
-
-        final EditText txtMrp = (EditText) view.findViewById(R.id.actual_price);
-
-        final EditText txtDiscount = (EditText) view.findViewById(R.id.discount_perc);
-
-        final EditText txtResult = (EditText) view.findViewById(R.id.discount_amount);
-
-        txtMrp.setSelectAllOnFocus(true);
-
-        txtDiscount.setSelectAllOnFocus(true);
-
-        txtMrp.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    if (txtMrp.getText().toString().length() == 0) {
-                        txtMrp.setText("Actual Price/MRP");
-
-                        isMrpCleaned = false;
-                    }
-                } else {
-                    if (!isMrpCleaned && txtMrp.getText().toString().equals("Actual Price/MRP")) {
-                        txtMrp.setText("");
-
-                        isMrpCleaned = true;
-                    }
-                }
-            }
-        });
-
-        txtDiscount.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    if (txtDiscount.getText().toString().length() == 0) {
-                        txtDiscount.setText("Discount offered");
-
-                        isDiscountCleaned = false;
-                    }
-                } else {
-                    if (!isDiscountCleaned && txtDiscount.getText().toString().equals("Discount offered")) {
-                        txtDiscount.setText("");
-
-                        isDiscountCleaned = true;
-                    }
-                }
-            }
-        });
-
-        view.findViewById(R.id.btnCalculate).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Toast toast = Toast.makeText(getContext(), "Clicked", Toast.LENGTH_LONG);
-                onClickBtnCalculate(view, txtMrp, txtDiscount, txtResult);
-                //toast.show();
-            }
-        });
+//        toast = Toast.makeText(getContext(), "Please enter a valid value", Toast.LENGTH_SHORT);
     }
 
     public boolean onClickBtnCalculate(View v, EditText txtMrp, EditText txtDiscount, EditText txtResult) {

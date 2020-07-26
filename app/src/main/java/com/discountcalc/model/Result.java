@@ -4,12 +4,14 @@ package com.discountcalc.model;
  * This class captures price, discount %, amount, tax %, total and saved information
  */
 public class Result {
+    private long id;
     private String priceStr;
     private String discountStr;
     private String amountStr;
     private boolean flag;
 
     public Result() {
+        this.id=System.currentTimeMillis();
         this.priceStr = "Price";
         this.discountStr = "Discount";
         this.amountStr = "Amount";
@@ -23,9 +25,9 @@ public class Result {
         flag = true;
         try {
             double price = Double.parseDouble(this.priceStr);
-            double discount = Double.parseDouble(this.priceStr);
+            double discount = Double.parseDouble(this.discountStr);
             double amount = price - ((discount/100) * price);
-            this.discountStr = String.valueOf(amount);
+            this.amountStr = String.valueOf(amount);
         } catch (NumberFormatException e){
             flag = false;
             e.printStackTrace();
@@ -33,6 +35,14 @@ public class Result {
         }
 
         return flag;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getPriceStr() {
@@ -70,7 +80,8 @@ public class Result {
     @Override
     public String toString() {
         return "Result{" +
-                "priceStr='" + priceStr + '\'' +
+                "id='" + id + '\'' +
+                ", priceStr='" + priceStr + '\'' +
                 ", discountStr='" + discountStr + '\'' +
                 ", amountStr='" + amountStr + '\'' +
                 '}';
