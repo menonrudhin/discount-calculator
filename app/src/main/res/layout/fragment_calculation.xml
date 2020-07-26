@@ -9,34 +9,35 @@
     <!-- A CardView that contains a TextView -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
         card_view:cardCornerRadius="10dp"
         card_view:cardElevation="5dp"
+        android:layout_marginTop="100dp"
         card_view:cardUseCompatPadding="true">
         <EditText
             android:id="@+id/txtPrice"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:layout_marginTop="60dp"/>
+            android:layout_marginTop="10dp"/>
 
         <EditText
             android:id="@+id/txtDiscount"
             android:layout_width="60dp"
             android:layout_height="50dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="120dp"/>
 
         <EditText
             android:id="@+id/txtAmount"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="200dp"/>
         <Button
             android:id="@+id/btnRemoveItem"
             android:layout_width="40dp"
             android:layout_height="50dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="300dp"
             android:text="-"/>
     </androidx.cardview.widget.CardView>

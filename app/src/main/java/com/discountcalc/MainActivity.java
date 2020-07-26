@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 
 import android.view.Menu;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private static List<Result> resultsList;
     public static View.OnClickListener myOnClickListener;
     private static ArrayList<Long> removedItems;
-    private static Total total;
+    //private static Total total;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +56,13 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         List<Result> results = new ArrayList<>();
-        this.total = new Total();
+        //this.total = new Total();
         Result result = new Result();
         result.setPriceStr("1000");
         result.setDiscountStr("20");
         results.add(result); // initialize
-        this.total.setResults(results);
-        this.total.calculate();
+        //this.total.setResults(results);
+        //this.total.calculate();
 
         myOnClickListener = new MyOnClickListener(this);
 
@@ -72,10 +73,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        this.resultsList = new ArrayList<>();
-        for(Result r : total.getResults()) {
-            resultsList.add(r);
-        }
+        resultsList = new ArrayList<>();
+        resultsList.addAll(results);
         removedItems = new ArrayList<Long>();
 
         adapter = new ResultAdapter(resultsList);
@@ -117,13 +116,18 @@ public class MainActivity extends AppCompatActivity {
                 if(result.getId() == selectedItemId){
                     EditText txtPrice = (EditText) v.findViewById(R.id.txtPrice);
                     EditText txtDiscount = (EditText) v.findViewById(R.id.txtDiscount);
-                    EditText txtAmount = (EditText) v.findViewById(R.id.txtAmount);
 
                     result.setPriceStr(txtPrice.getText().toString());
                     result.setDiscountStr(txtDiscount.getText().toString());
-                    total.calculate();
+                    result.calculate();
                 }
             }
+            if(selectedItemPosition == (resultsList.size()-1) && resultsList.get(resultsList.size()-1).isCalculated()){
+                Result result = new Result();
+                resultsList.add(result); // initialize
+                Log.d("DEBUG", "onClick:adding new row");
+            }
+
             adapter.notifyDataSetChanged();
         }
 

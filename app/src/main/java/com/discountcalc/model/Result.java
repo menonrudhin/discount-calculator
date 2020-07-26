@@ -9,6 +9,7 @@ public class Result {
     private String discountStr;
     private String amountStr;
     private boolean flag;
+    private boolean isCalculated;
 
     public Result() {
         this.id=System.currentTimeMillis();
@@ -16,6 +17,7 @@ public class Result {
         this.discountStr = "Discount";
         this.amountStr = "Amount";
         this.flag = true;
+        this.isCalculated = false;
     }
 
     /**
@@ -28,6 +30,7 @@ public class Result {
             double discount = Double.parseDouble(this.discountStr);
             double amount = price - ((discount/100) * price);
             this.amountStr = String.valueOf(amount);
+            this.isCalculated=true;
         } catch (NumberFormatException e){
             flag = false;
             e.printStackTrace();
@@ -43,6 +46,14 @@ public class Result {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public boolean isCalculated() {
+        return isCalculated;
+    }
+
+    public void setCalculated(boolean calculated) {
+        isCalculated = calculated;
     }
 
     public String getPriceStr() {
@@ -80,10 +91,12 @@ public class Result {
     @Override
     public String toString() {
         return "Result{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", priceStr='" + priceStr + '\'' +
                 ", discountStr='" + discountStr + '\'' +
                 ", amountStr='" + amountStr + '\'' +
+                ", flag=" + flag +
+                ", isCalculated=" + isCalculated +
                 '}';
     }
 }
