@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private static List<Result> resultsList;
     public static View.OnClickListener myOnClickListener;
     private static ArrayList<Long> removedItems;
-    private Total total;
+    private static Total total;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +111,20 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
+            int selectedItemPosition = recyclerView.getChildAdapterPosition(v);
+            long selectedItemId=resultsList.get(selectedItemPosition).getId();
+            for(Result result : resultsList){
+                if(result.getId() == selectedItemId){
+                    EditText txtPrice = (EditText) v.findViewById(R.id.txtPrice);
+                    EditText txtDiscount = (EditText) v.findViewById(R.id.txtDiscount);
+                    EditText txtAmount = (EditText) v.findViewById(R.id.txtAmount);
 
+                    result.setPriceStr(txtPrice.getText().toString());
+                    result.setDiscountStr(txtDiscount.getText().toString());
+                    total.calculate();
+                }
+            }
+            adapter.notifyDataSetChanged();
         }
 
         private void addItem(View v) {

@@ -21,7 +21,7 @@
 
         <EditText
             android:id="@+id/txtDiscount"
-            android:layout_width="100dp"
+            android:layout_width="60dp"
             android:layout_height="50dp"
             android:layout_marginTop="60dp"
             android:layout_marginLeft="120dp"/>
@@ -31,13 +31,13 @@
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_marginTop="60dp"
-            android:layout_marginLeft="240dp"/>
+            android:layout_marginLeft="200dp"/>
         <Button
             android:id="@+id/btnRemoveItem"
-            android:layout_width="30dp"
+            android:layout_width="40dp"
             android:layout_height="50dp"
             android:layout_marginTop="60dp"
-            android:layout_marginLeft="360dp"
+            android:layout_marginLeft="300dp"
             android:text="-"/>
     </androidx.cardview.widget.CardView>
 </LinearLayout>
