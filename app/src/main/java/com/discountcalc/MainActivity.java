@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.discountcalc.adapter.ResultAdapter;
+import com.discountcalc.adapter.ResultAdapterTotal;
 import com.discountcalc.model.Result;
 import com.discountcalc.model.Total;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -26,7 +27,6 @@ import android.util.Log;
 import android.view.View;
 
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -40,13 +40,17 @@ public class MainActivity extends AppCompatActivity {
     private Context mContext=MainActivity.this;
     private static final int REQUEST = 112;
 
-    private static RecyclerView.Adapter adapter;
-    private RecyclerView.LayoutManager layoutManager;
-    private static RecyclerView recyclerView;
+    private static RecyclerView.Adapter adapterContentMain;
+    private static RecyclerView.Adapter adapterContentTotal;
+    private RecyclerView.LayoutManager layoutManagerContentMain;
+    private RecyclerView.LayoutManager layoutManagerContentTotal;
+    private static RecyclerView recyclerViewContentMain;
+    private static RecyclerView recyclerViewContentTotal;
     private static List<Result> resultsList;
-    public static View.OnClickListener myOnClickListener;
+    public static View.OnClickListener myOnClickListenerContentMain;
+    public static View.OnClickListener myOnClickListenerContentTotal;
     private static ArrayList<Long> removedItems;
-    //private static Total total;
+    private static Total total;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         List<Result> results = new ArrayList<>();
-        //this.total = new Total();
+        this.total = new Total();
         Result result = new Result();
         result.setPriceStr("1000");
         result.setDiscountStr("20");
@@ -70,30 +74,38 @@ public class MainActivity extends AppCompatActivity {
         Result result3 = new Result();
         result3.setPriceStr("1000");
         result3.setDiscountStr("20");
-        results.add(result3); // initialize
+        //results.add(result3); // initialize
 
         Result result4 = new Result();
         result4.setPriceStr("1000");
         result4.setDiscountStr("20");
-        results.add(result4); // initialize
-        //this.total.setResults(results);
-        //this.total.calculate();
+        //results.add(result4); // initialize
+        this.total.setResults(results);
+        this.total.calculate();
 
-        myOnClickListener = new MyOnClickListener(this);
+        myOnClickListenerContentMain = new MyOnClickListener(this);
+        myOnClickListenerContentTotal = new MyOnClickListenerContentTotal(this);
 
-        recyclerView = (RecyclerView) findViewById(R.id.content_main);
-        recyclerView.setHasFixedSize(true);
+        recyclerViewContentMain = (RecyclerView) findViewById(R.id.content_main);
+        recyclerViewContentMain.setHasFixedSize(true);
+        recyclerViewContentTotal = (RecyclerView) findViewById(R.id.content_total);
+        recyclerViewContentTotal.setHasFixedSize(true);
 
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        layoutManagerContentMain = new LinearLayoutManager(this);
+        recyclerViewContentMain.setLayoutManager(layoutManagerContentMain);
+        recyclerViewContentMain.setItemAnimator(new DefaultItemAnimator());
+        layoutManagerContentTotal = new LinearLayoutManager(this);
+        recyclerViewContentTotal.setLayoutManager(layoutManagerContentTotal);
+        recyclerViewContentTotal.setItemAnimator(new DefaultItemAnimator());
 
         resultsList = new ArrayList<>();
         resultsList.addAll(results);
         removedItems = new ArrayList<Long>();
 
-        adapter = new ResultAdapter(resultsList);
-        recyclerView.setAdapter(adapter);
+        adapterContentMain = new ResultAdapter(resultsList);
+        recyclerViewContentMain.setAdapter(adapterContentMain);
+        adapterContentTotal = new ResultAdapterTotal(total);
+        recyclerViewContentTotal.setAdapter(adapterContentTotal);
 
         FloatingActionButton btnScreenShot = findViewById(R.id.btnScreenShot);
         btnScreenShot.setOnClickListener(new View.OnClickListener() {
@@ -126,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Log.d("DEBUG", "**** clicked the view ****");
-            int selectedItemPosition = recyclerView.getChildAdapterPosition(v);
+            int selectedItemPosition = recyclerViewContentMain.getChildAdapterPosition(v);
             long selectedItemId=resultsList.get(selectedItemPosition).getId();
             for(Result result : resultsList){
                 if(result.getId() == selectedItemId){
@@ -135,16 +147,17 @@ public class MainActivity extends AppCompatActivity {
 
                     result.setPriceStr(txtPrice.getText().toString());
                     result.setDiscountStr(txtDiscount.getText().toString());
-                    result.calculate();
                 }
             }
+            total.calculate();
             if(selectedItemPosition == (resultsList.size()-1) && resultsList.get(resultsList.size()-1).isCalculated()){
                 Result result = new Result();
                 resultsList.add(result); // initialize
                 Log.d("DEBUG", "onClick:adding new row");
             }
 
-            adapter.notifyDataSetChanged();
+            adapterContentMain.notifyDataSetChanged();
+            adapterContentTotal.notifyDataSetChanged();
         }
 
         private void addItem(View v) {
@@ -152,11 +165,49 @@ public class MainActivity extends AppCompatActivity {
 
 
         private void removeItem(View v) {
-            int selectedItemPosition = recyclerView.getChildAdapterPosition(v);
+            int selectedItemPosition = recyclerViewContentMain.getChildAdapterPosition(v);
             long selectedItemId=resultsList.get(selectedItemPosition).getId();
             removedItems.add(selectedItemId);
             resultsList.remove(selectedItemPosition);
-            adapter.notifyItemRemoved(selectedItemPosition);
+            adapterContentMain.notifyItemRemoved(selectedItemPosition);
+        }
+    }
+
+    private static class MyOnClickListenerContentTotal implements View.OnClickListener {
+
+        private final Context context;
+
+        private MyOnClickListenerContentTotal(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public void onClick(View v) {
+            Log.d("DEBUG", "**** clicked the total view ****");
+            EditText txtYouSave = (EditText) v.findViewById(R.id.txtYouSave);
+            EditText txtTax = (EditText) v.findViewById(R.id.txtTax);
+            EditText txtTotal = (EditText) v.findViewById(R.id.txtTotal);
+
+            total.setTaxStr(txtTax.getText().toString());
+            total.calculate();
+
+            txtYouSave.setText(total.getSavedStr());
+            txtTotal.setText(total.getTotalStr());
+
+            adapterContentMain.notifyDataSetChanged();
+            adapterContentTotal.notifyDataSetChanged();
+        }
+
+        private void addItem(View v) {
+        }
+
+
+        private void removeItem(View v) {
+            int selectedItemPosition = recyclerViewContentMain.getChildAdapterPosition(v);
+            long selectedItemId=resultsList.get(selectedItemPosition).getId();
+            removedItems.add(selectedItemId);
+            resultsList.remove(selectedItemPosition);
+            adapterContentMain.notifyItemRemoved(selectedItemPosition);
         }
     }
 

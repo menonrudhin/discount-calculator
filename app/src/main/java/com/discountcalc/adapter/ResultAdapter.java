@@ -41,7 +41,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHold
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_calculation, parent, false);
 
-        view.setOnClickListener(MainActivity.myOnClickListener);
+        view.setOnClickListener(MainActivity.myOnClickListenerContentMain);
 
         MyViewHolder myViewHolder = new MyViewHolder(view);
 
