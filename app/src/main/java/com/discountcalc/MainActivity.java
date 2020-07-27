@@ -80,8 +80,6 @@ public class MainActivity extends AppCompatActivity {
         result4.setPriceStr("1000");
         result4.setDiscountStr("20");
         //results.add(result4); // initialize
-        this.total.setResults(results);
-        this.total.calculate();
 
         myOnClickListenerContentMain = new MyOnClickListener(this);
         myOnClickListenerContentTotal = new MyOnClickListenerContentTotal(this);
@@ -101,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
         resultsList = new ArrayList<>();
         resultsList.addAll(results);
         removedItems = new ArrayList<Long>();
+        this.total.setResults(resultsList);
+        this.total.calculate();
 
         adapterContentMain = new ResultAdapter(resultsList);
         recyclerViewContentMain.setAdapter(adapterContentMain);
@@ -140,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("DEBUG", "**** clicked the view ****");
             int selectedItemPosition = recyclerViewContentMain.getChildAdapterPosition(v);
             long selectedItemId=resultsList.get(selectedItemPosition).getId();
+            boolean changed = false;
             for(Result result : resultsList){
                 if(result.getId() == selectedItemId){
                     EditText txtPrice = (EditText) v.findViewById(R.id.txtPrice);
@@ -147,17 +148,24 @@ public class MainActivity extends AppCompatActivity {
 
                     result.setPriceStr(txtPrice.getText().toString());
                     result.setDiscountStr(txtDiscount.getText().toString());
+                    if(!total.calculate()) {
+                        // TODO change edittext's outline to alert color
+                    }
+                    changed = true;
                 }
             }
-            total.calculate();
+
             if(selectedItemPosition == (resultsList.size()-1) && resultsList.get(resultsList.size()-1).isCalculated()){
                 Result result = new Result();
                 resultsList.add(result); // initialize
+                changed = true;
                 Log.d("DEBUG", "onClick:adding new row");
             }
 
-            adapterContentMain.notifyDataSetChanged();
-            adapterContentTotal.notifyDataSetChanged();
+            if(changed) {
+                adapterContentMain.notifyDataSetChanged();
+                adapterContentTotal.notifyDataSetChanged();
+            }
         }
 
         private void addItem(View v) {

@@ -1,5 +1,7 @@
 package com.discountcalc.model;
 
+import android.util.Log;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,7 @@ public class Total {
     /**
      * Calculate everything if any field value changes
      */
-    public void calculate(){
+    public boolean calculate(){
         flag = true;
         double total = 0.0;
         double actualTotal = 0.0;
@@ -30,10 +32,10 @@ public class Total {
 
         for(Result result : results){
             if(!result.calculate()) {
-                this.totalStr="Error!";
-                this.savedStr="Error!";
+                //this.totalStr="Error!";
+                //this.savedStr="Error!";
                 flag = false;
-                return;
+                continue;
             } else {
                 double amount = Double.parseDouble(result.getAmountStr());
                 total+=amount;
@@ -43,6 +45,18 @@ public class Total {
                 this.savedStr=String.valueOf(saved);
             }
         }
+
+        try{
+            double tax = Double.parseDouble(this.getTaxStr());
+            total = total + ((tax/100) * total);
+            saved = (actualTotal + ((tax/100)*actualTotal))-total;
+            this.totalStr=String.valueOf(total);
+            this.savedStr=String.valueOf(saved);
+        } catch (NumberFormatException e){
+            Log.d("DEBUG","No tax defined");
+        }
+
+        return flag;
     }
 
 
