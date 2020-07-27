@@ -26,7 +26,8 @@
             android:id="@+id/txtYouSave"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:layout_marginTop="30dp" />
+            android:layout_marginTop="30dp"
+            android:textAlignment="center"/>
         <TextView
             android:id="@+id/lblTax"
             android:layout_width="80dp"
@@ -40,7 +41,9 @@
             android:layout_width="80dp"
             android:layout_marginLeft="120dp"
             android:layout_height="50dp"
-            android:layout_marginTop="30dp" />
+            android:layout_marginTop="30dp"
+            android:textAlignment="center"
+            android:selectAllOnFocus="true"/>
         <TextView
             android:id="@+id/lblTotal"
             android:layout_width="100dp"
@@ -54,7 +57,8 @@
             android:layout_width="100dp"
             android:layout_marginLeft="220dp"
             android:layout_height="50dp"
-            android:layout_marginTop="30dp"/>
+            android:layout_marginTop="30dp"
+            android:textAlignment="center"/>
 
 
     </androidx.cardview.widget.CardView>
