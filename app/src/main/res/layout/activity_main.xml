@@ -19,7 +19,29 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
-
+    <TextView
+        android:id="@+id/lblPrice"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:textAlignment="center"
+        android:text="Price" />
+    <TextView
+        android:id="@+id/lblDiscount"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="120dp"
+        android:layout_marginTop="70dp"
+        android:textAlignment="center"
+        android:text="Discount" />
+    <TextView
+        android:id="@+id/lblAmount"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="70dp"
+        android:textAlignment="center"
+        android:text="Amount" />
     <include layout="@layout/content_main" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
