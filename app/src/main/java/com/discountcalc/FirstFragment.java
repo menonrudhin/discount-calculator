@@ -3,7 +3,9 @@ package com.discountcalc;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -44,6 +46,36 @@ public class FirstFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 //        toast = Toast.makeText(getContext(), "Please enter a valid value", Toast.LENGTH_SHORT);
+        view.findViewById(R.id.txtPrice).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                editTextOnClickListener(view);
+                return true;
+            }
+        });
+        view.findViewById(R.id.txtDiscount).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                editTextOnClickListener(view);
+                return true;
+            }
+        });
+    }
+
+    public void editTextOnClickListener(View v){
+        Log.d("DEBUG","clicked edittext");
+        EditText txtPrice = (EditText) v.findViewById(R.id.txtPrice);
+        EditText txtDiscount = (EditText) v.findViewById(R.id.txtDiscount);
+
+        Result result = new Result();
+        result.setPriceStr(txtPrice.getText().toString());
+        result.setDiscountStr(txtDiscount.getText().toString());
+
+        EditText txtAmount = (EditText) v.findViewById(R.id.txtAmount);
+        if(result.calculate())
+            txtAmount.setText(result.getAmountStr());
+        else
+            txtAmount.setText("Error!");
     }
 
     public boolean onClickBtnCalculate(View v, EditText txtMrp, EditText txtDiscount, EditText txtResult) {

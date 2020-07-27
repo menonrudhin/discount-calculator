@@ -44,8 +44,12 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHold
         view.setOnClickListener(MainActivity.myOnClickListener);
 
         MyViewHolder myViewHolder = new MyViewHolder(view);
+
+
         return myViewHolder;
     }
+
+
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int listPosition) {

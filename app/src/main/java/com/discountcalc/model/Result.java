@@ -4,6 +4,7 @@ package com.discountcalc.model;
  * This class captures price, discount %, amount, tax %, total and saved information
  */
 public class Result {
+    private static long idGenerator=0L;
     private long id;
     private String priceStr;
     private String discountStr;
@@ -12,7 +13,7 @@ public class Result {
     private boolean isCalculated;
 
     public Result() {
-        this.id=System.currentTimeMillis();
+        this.id=Result.idGenerator++;
         this.priceStr = "Price";
         this.discountStr = "Discount";
         this.amountStr = "Amount";

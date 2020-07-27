@@ -61,6 +61,21 @@ public class MainActivity extends AppCompatActivity {
         result.setPriceStr("1000");
         result.setDiscountStr("20");
         results.add(result); // initialize
+
+        Result result2 = new Result();
+        result2.setPriceStr("1000");
+        result2.setDiscountStr("20");
+        results.add(result2); // initialize
+
+        Result result3 = new Result();
+        result3.setPriceStr("1000");
+        result3.setDiscountStr("20");
+        results.add(result3); // initialize
+
+        Result result4 = new Result();
+        result4.setPriceStr("1000");
+        result4.setDiscountStr("20");
+        results.add(result4); // initialize
         //this.total.setResults(results);
         //this.total.calculate();
 
@@ -110,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
+            Log.d("DEBUG", "**** clicked the view ****");
             int selectedItemPosition = recyclerView.getChildAdapterPosition(v);
             long selectedItemId=resultsList.get(selectedItemPosition).getId();
             for(Result result : resultsList){
